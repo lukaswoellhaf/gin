@@ -90,7 +90,7 @@ func assert1(guard bool, text string) {
 
 func filterFlags(content string) string {
 	for i, char := range content {
-		if char == ' ' || char == ';' {
+		if char == ';' {
 			return content[:i]
 		}
 	}
