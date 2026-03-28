@@ -1,0 +1,24 @@
+name: jitgen
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  jitgen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run jitgen
+        uses: lukaswoellhaf/jitgen@epic/poc-test-gen #TODO: Adapt to main branch once merged
+        with:
+          repo-path: ${{ github.workspace }}
+          parent-ref: ${{ github.event.pull_request.base.sha }}
+          child-ref: ${{ github.event.pull_request.head.sha }}
+          llm-api-key: ${{ secrets.LLM_API_KEY }}
+          llm-endpoint: ${{ vars.LLM_ENDPOINT }}
+          llm-model: ${{ vars.LLM_MODEL }}
